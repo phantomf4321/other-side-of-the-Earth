@@ -6,7 +6,6 @@
     <title>نقطه مقابل در کره زمین با کنترل زوم</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
-    <!-- اضافه کردن CSS Leaflet -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <style>
         body {
@@ -192,32 +191,25 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- اضافه کردن کتابخانه Leaflet -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
-        // متغیرهای زوم
         let currentZoom = 5;
         let antipodeZoom = 1;
         
-        // متغیرهای نقشه
         let currentMap, antipodeMap;
         let currentMarker, antipodeMarker;
         
-        // تابع مقداردهی اولیه نقشه‌ها
         function initMaps() {
-            // نقشه فعلی
             currentMap = L.map('currentMapLeaflet').setView([35.6892, 51.3890], currentZoom);
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             }).addTo(currentMap);
             
-            // اضافه کردن نشانگر
             currentMarker = L.marker([35.6892, 51.3890], {
                 draggable: true,
                 autoPan: true
             }).addTo(currentMap);
             
-            // رویداد کلیک و درگ برای نقشه فعلی
             currentMap.on('click', function(e) {
                 updateCoordinates(e.latlng.lat, e.latlng.lng);
             });
@@ -228,7 +220,6 @@
                 updateCoordinates(position.lat, position.lng);
             });
             
-            // نقشه نقطه مقابل
             antipodeMap = L.map('antipodeMapLeaflet').setView([-35.6892, -128.6110], antipodeZoom);
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -236,37 +227,29 @@
             
             antipodeMarker = L.marker([-35.6892, -128.6110]).addTo(antipodeMap);
             
-            // به‌روزرسانی نمایش مختصات
             document.getElementById("currentLatDisplay").textContent = "35.6892";
             document.getElementById("currentLngDisplay").textContent = "51.3890";
             document.getElementById("antipodeLatDisplay").textContent = "-35.6892";
             document.getElementById("antipodeLngDisplay").textContent = "-128.6110";
             
-            // مقداردهی اولیه فیلدهای ورودی
             document.getElementById("latitude").value = "35.6892";
             document.getElementById("longitude").value = "51.3890";
             
-            // محاسبه نقطه مقابل اولیه
             calculateAndDisplayAntipode();
         }
         
-        // تابع به‌روزرسانی مختصات از طریق کلیک یا درگ
         function updateCoordinates(lat, lng) {
             document.getElementById("latitude").value = lat.toFixed(6);
             document.getElementById("longitude").value = lng.toFixed(6);
             
-            // به‌روزرسانی نشانگر
             currentMarker.setLatLng([lat, lng]);
             
-            // به‌روزرسانی نمایش مختصات
             document.getElementById("currentLatDisplay").textContent = lat.toFixed(6);
             document.getElementById("currentLngDisplay").textContent = lng.toFixed(6);
             
-            // محاسبه نقطه مقابل
             calculateAndDisplayAntipode();
         }
         
-        // تابع محاسبه نقطه مقابل
         function calculateAntipode(lat, lng) {
             const antipodeLat = -lat;
             let antipodeLng = lng + 180;
@@ -276,7 +259,6 @@
             return { lat: antipodeLat, lng: antipodeLng };
         }
         
-        // تابع تغییر زوم
         function changeZoom(mapType, change) {
             if (mapType === 'current') {
                 currentZoom = Math.min(18, Math.max(1, currentZoom + change));
@@ -289,7 +271,6 @@
             }
         }
         
-        // تابع دریافت موقعیت فعلی با GPS
         function getCurrentLocation() {
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(
@@ -306,7 +287,6 @@
             }
         }
         
-        // تابع اصلی محاسبه و نمایش نتایج
         function calculateAndDisplayAntipode() {
             const lat = parseFloat(document.getElementById("latitude").value);
             const lng = parseFloat(document.getElementById("longitude").value);
@@ -316,24 +296,19 @@
                 return;
             }
             
-            // محاسبه نقطه مقابل
             const antipode = calculateAntipode(lat, lng);
             
-            // نمایش نتایج
             document.getElementById("antipodeLat").textContent = antipode.lat.toFixed(6);
             document.getElementById("antipodeLng").textContent = antipode.lng.toFixed(6);
             document.getElementById("antipodeLocation").textContent = getApproximateLocation(antipode.lat, antipode.lng);
             
-            // به‌روزرسانی مختصات نمایشی
             document.getElementById("antipodeLatDisplay").textContent = antipode.lat.toFixed(6);
             document.getElementById("antipodeLngDisplay").textContent = antipode.lng.toFixed(6);
             
-            // به‌روزرسانی نقشه نقطه مقابل
             antipodeMap.setView([antipode.lat, antipode.lng], antipodeZoom);
             antipodeMarker.setLatLng([antipode.lat, antipode.lng]);
         }
         
-        // تابع تشخیص موقعیت تقریبی (ساده)
         function getApproximateLocation(lat, lng) {
             if (lat > 0) {
                 if (lng > 0) return "نیمکره شمالی شرقی";
@@ -344,11 +319,9 @@
             }
         }
         
-        // رویدادهای دکمه‌ها
         document.getElementById("getLocationBtn").addEventListener("click", getCurrentLocation);
         document.getElementById("calculateBtn").addEventListener("click", calculateAndDisplayAntipode);
         
-        // مقداردهی اولیه نقشه‌ها پس از لود صفحه
         window.onload = initMaps;
     </script>
 </body>
