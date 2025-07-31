@@ -2,12 +2,12 @@
 
 A web tool that calculates and visualizes the exact opposite point (antipode) of any location on Earth.
 
-![App Screenshot](screenshot.png)
-
 ## Test Url:
 ```
 https://phantomf4321.github.io/other-side-of-the-Earth
 ```
+
+![App Screenshot](screenshot.png)
 
 ## ✨ Features
 - Dual interactive maps (origin + antipode)
