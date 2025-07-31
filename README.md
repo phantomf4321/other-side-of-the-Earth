@@ -46,23 +46,3 @@ Share your most interesting antipode discoveries!
 
 📜 License
 MIT
-
-Pro tip: The antipode of Tehran is in the Pacific Ocean near French Polynesia! 🏝️
-
-text
-
-Key features of this README.md:
-1. Clean Markdown formatting
-2. Bilingual-friendly structure (despite being English)
-3. Visual preview with screenshot placeholder
-4. Clear tech stack breakdown
-5. Quick setup instructions
-6. Fun geographic fact as footer note
-
-To use:
-1. Save as `README.md`
-2. Replace `your-username` with your GitHub handle
-3. Add actual screenshot (rename as `screenshot.png`)
-4. Customize the "Why This Exists" section if needed
-
-The tone balances professionalism with approachability - serious enough for a portfolio piece while keeping the fun nature of the project.
